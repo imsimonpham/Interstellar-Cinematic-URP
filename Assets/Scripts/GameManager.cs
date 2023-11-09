@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        SwitchToCinematic();
+        //SwitchToCinematic();
         SwitchCam();
         QuitGame();
     }

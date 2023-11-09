@@ -10,7 +10,7 @@ public class ShipControls : MonoBehaviour
     [SerializeField] private float _currentSpeed;
     private float _vertical;
     private float _horizontal;
-    private float _accelerator; 
+    private float _acceleratingRate; 
     [SerializeField] private float _maxRotate;
     [SerializeField] private GameObject _shipModel;
 
@@ -21,7 +21,7 @@ public class ShipControls : MonoBehaviour
     void Start()
     {
         _currentSpeed = 1;
-        _accelerator = 1;
+        _acceleratingRate = 1;
         ControlEngineFlames(_currentSpeed);
     }
 
@@ -38,7 +38,7 @@ public class ShipControls : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            _currentSpeed += _accelerator * Time.deltaTime;
+            _currentSpeed += _acceleratingRate * Time.deltaTime;
             ControlEngineFlames(_currentSpeed);
             if (_currentSpeed > 10)
             {
@@ -47,7 +47,7 @@ public class ShipControls : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            _currentSpeed -= _accelerator * Time.deltaTime;
+            _currentSpeed -= _acceleratingRate * Time.deltaTime;
             ControlEngineFlames(_currentSpeed);
             if (_currentSpeed < 1)
             {
