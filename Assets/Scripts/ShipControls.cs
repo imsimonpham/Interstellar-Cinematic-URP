@@ -5,7 +5,8 @@ using UnityEngine;
 public class ShipControls : MonoBehaviour
 {
     
-    [SerializeField] private float _rotSpeed;
+    [SerializeField] private float _vRotSpeed;
+    [SerializeField] private float _hRotSpeed;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _currentSpeed;
     private float _vertical;
@@ -57,10 +58,10 @@ public class ShipControls : MonoBehaviour
         
 
         Vector3 rotateH = new Vector3(0, _horizontal, 0);
-        transform.Rotate(rotateH * _rotSpeed * Time.deltaTime);
+        transform.Rotate(rotateH * _hRotSpeed * Time.deltaTime);
 
         Vector3 rotateV = new Vector3(_vertical, 0, 0);
-        transform.Rotate(rotateV * _rotSpeed * Time.deltaTime);
+        transform.Rotate(rotateV * - 1f * _vRotSpeed * Time.deltaTime);
 
         transform.Rotate(new Vector3(0, 0, -_horizontal * 0.2f), Space.Self);
 
