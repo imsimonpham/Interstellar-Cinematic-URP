@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 3847058998747447146}
   - component: {fileID: 73474485697320781}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: EnemyBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -404,6 +404,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26773df3854b2014f88ed2ed87fef183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dmg: 20
+  _launchForce: 10000
+  _dmg: 100
   _bulletSpeed: 500
-  _bulletImpactEffect: {fileID: 100000, guid: 13266a9cf8da28e41bfa61b378dfabc5, type: 3}
