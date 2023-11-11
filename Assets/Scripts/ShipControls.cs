@@ -30,6 +30,10 @@ public class ShipControls : MonoBehaviour
     void Update()
     {
         ShipMovement();
+        if (_currentSpeed == 0)
+        {
+            ControlEngineFlames( 0);
+        }
     }
 
     private void ShipMovement()
@@ -50,9 +54,9 @@ public class ShipControls : MonoBehaviour
         {
             _currentSpeed -= _acceleratingRate * Time.deltaTime;
             ControlEngineFlames(_currentSpeed);
-            if (_currentSpeed < 1)
+            if (_currentSpeed < 0)
             {
-                _currentSpeed = 1;
+                _currentSpeed = 0;
             } 
         }
         
@@ -80,5 +84,10 @@ public class ShipControls : MonoBehaviour
             }
             ps.startSpeed = new ParticleSystem.MinMaxCurve(speed);
         }
+    }
+
+    public void StopShip()
+    {
+        _currentSpeed = 0;
     }
 }

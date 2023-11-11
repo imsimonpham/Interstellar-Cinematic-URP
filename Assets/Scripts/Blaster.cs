@@ -7,7 +7,7 @@ public class Blaster : MonoBehaviour
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private GameObject _firePoint;
     [SerializeField] [Range(0f, 5f)] private float _fireRate = 2f;
-    private GameObject _cloneContainer;
+    [SerializeField] private GameObject _cloneContainer;
     private float _canFire = 1f;
     [SerializeField] private AudioClip _laserSound;
     private AudioSource _audioSource;
