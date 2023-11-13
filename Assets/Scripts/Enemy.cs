@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Enemy : MonoBehaviour
     private MeshRenderer _meshRenderer;
     private BoxCollider _boxCollider;
     [SerializeField] private HealthBarUI _healthBarCanvas;
+    [SerializeField] private PlayableDirector _endingDirector;
     
     void Start()
     {
@@ -41,7 +43,13 @@ public class Enemy : MonoBehaviour
         if (_health <= 0)
         {
             Die();
+            Invoke("PlayEndingCutscene", 2f);
         }
+    }
+
+    void PlayEndingCutscene()
+    {
+        _endingDirector.Play();
     }
 
     void Die()

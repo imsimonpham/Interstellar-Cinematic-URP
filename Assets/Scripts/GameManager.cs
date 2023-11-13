@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.Playables;
@@ -11,19 +10,38 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _thirdPersonCam;
 
     private float _timer;
-    [SerializeField] private GameObject _camContainer;
-    [SerializeField] private PlayableDirector _director;
+    [SerializeField] private GameObject _mainSpaceship;
+    [SerializeField] private PlayableDirector _noActivityDirector;
+    
+    [SerializeField] private GameObject _noActivityTimelineContainer;
+    [SerializeField] private Trigger _trigger;
+    private Vector3  _startPos = new Vector3(-417, 167, 0);
+    private Quaternion _startRot = Quaternion.Euler(0f,-180, 0f);
+    private Vector3  _currentPos;
+    private Quaternion _currentRot;
+    
+    [SerializeField] private PlayableDirector[] _otherDirectors;
+    private bool _anotherDirectorPlaying;
 
 
     void Start()
     {
         _timer = 0f;
+        _noActivityTimelineContainer.SetActive(false);
+        //Play intro cutscene
+        _otherDirectors[0].Play();
+        //_mainSpaceship.SetActive(false);
     }
 
     void Update()
     {
-        //SwitchToCinematic();
-        SwitchCam();
+        SwitchToCinematic();
+        CheckIfOtherDirectorsAreActive();
+        if (_otherDirectors[0].state == PlayState.Paused)
+        {
+            _mainSpaceship.SetActive(true);
+        }
+        SwitchCam(); 
         QuitGame();
     }
 
@@ -32,20 +50,35 @@ public class GameManager : MonoBehaviour
         if (Input.GetAxis("Mouse X") == 0 && Input.GetAxis("Mouse Y") == 0 && !Input.anyKey)
         {
             _timer += Time.deltaTime;
-            if (_timer >= 5f)
+            if (_timer >= 5f && _anotherDirectorPlaying == false)
             {
-                _director.gameObject.SetActive(true);
-                _camContainer.SetActive(false);
-                _director.GetComponent<PlayableDirector>().Play();
+                _noActivityTimelineContainer.SetActive(true);
+                _mainSpaceship.SetActive(false);
+                _noActivityDirector.Play();
             }
-        }
-        else
+        } else 
         {
+            _noActivityTimelineContainer.SetActive(false);
             _timer = 0f;
-            _director.gameObject.SetActive(false);
-            _camContainer.SetActive(true);
+            _mainSpaceship.SetActive(true);
+            _noActivityDirector.Stop();
         }
     }
+    
+     void CheckIfOtherDirectorsAreActive()
+     {
+         _anotherDirectorPlaying = false;
+         foreach (PlayableDirector director in _otherDirectors)
+         {
+             if (director.state == PlayState.Playing)
+             {
+                 _timer = 0f;
+                 _mainSpaceship.SetActive(false);
+                 _anotherDirectorPlaying = true;
+                 break;
+             }
+         } 
+     }
 
    void SwitchCam()
    {

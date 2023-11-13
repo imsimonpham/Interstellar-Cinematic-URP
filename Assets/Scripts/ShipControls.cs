@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipControls : MonoBehaviour
@@ -30,10 +28,6 @@ public class ShipControls : MonoBehaviour
     void Update()
     {
         ShipMovement();
-        if (_currentSpeed == 0)
-        {
-            ControlEngineFlames( 0);
-        }
     }
 
     private void ShipMovement()
@@ -89,5 +83,12 @@ public class ShipControls : MonoBehaviour
     public void StopShip()
     {
         _currentSpeed = 0;
+        ControlEngineFlames( 0);
+    }
+    
+    public void SetSpeed(float speed)
+    {
+        _currentSpeed = speed;
+        ControlEngineFlames(speed);
     }
 }
