@@ -28,9 +28,4 @@ public class Bullet : MonoBehaviour
         Destroy(this.gameObject);
      }
    }
-
-   public float GetBulletDmg()
-   {
-      return _dmg;
-   }
 }

@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Playables;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,12 +10,21 @@ public class Enemy : MonoBehaviour
     private MeshRenderer _meshRenderer;
     private BoxCollider _boxCollider;
     [SerializeField] private HealthBarUI _healthBarCanvas;
-    [SerializeField] private PlayableDirector _endingDirector;
+    [SerializeField] private GameManager _gameManager;
+    
+    [SerializeField] private GameObject _bulletPrefab;
+    [SerializeField] private GameObject[] _firePoints;
+    [SerializeField] [Range(0f, 5f)] private float _fireRate;
+    [SerializeField] private GameObject _cloneContainer;
+    private float _canFire = 1f;
+    private bool _startFiring;
+    [SerializeField] private AudioClip _laserSound;
     
     void Start()
     {
         _health = _maxHealth;
         _audioSource = GetComponent<AudioSource>();
+        _startFiring = false;
         
         if (_audioSource == null)
         {
@@ -36,20 +43,35 @@ public class Enemy : MonoBehaviour
             Debug.Log("Mesh Collider is null");
         }
     }
+    
+    void Update()
+    {
+        if (_canFire <= 0f && _startFiring)
+        {
+            Fire();
+            _canFire = 1f / _fireRate;
+        }
+        _canFire -= Time.deltaTime;
+    }
+
+     void Fire()
+    {
+        foreach (var firePoint in _firePoints)
+        {
+            GameObject bullet = Instantiate(_bulletPrefab, firePoint.transform.position, transform.rotation);
+            bullet.transform.parent = _cloneContainer.transform;
+        }
+        //_audioSource.PlayOneShot(_laserSound);
+    }
     public void TakeDamage(float amount)
     {
         _health -= amount;
         _healthBarCanvas.UpdateHealthBarUI(_health, _maxHealth);
         if (_health <= 0)
         {
+            _gameManager.CheckEnemyDeath();
             Die();
-            Invoke("PlayEndingCutscene", 2f);
         }
-    }
-
-    void PlayEndingCutscene()
-    {
-        _endingDirector.Play();
     }
 
     void Die()
@@ -58,16 +80,17 @@ public class Enemy : MonoBehaviour
         _audioSource.PlayOneShot(_explosionSound);
         Destroy(_meshRenderer);
         Destroy(_boxCollider);
+        _healthBarCanvas.gameObject.SetActive(false);
         Destroy(this.gameObject, 2f);
     }
 
-    public float GetEnemyHealth()
+    public void ShowHealthBar()
     {
-        return _health;
+        _healthBarCanvas.gameObject.SetActive(true);
     }
-    
-    public float GetEnemyMaxHealth()
+
+    public void StartFiring()
     {
-        return _health;
+        _startFiring = true;
     }
 }

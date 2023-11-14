@@ -1,20 +1,20 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShipControls : MonoBehaviour
 {
-    
     [SerializeField] private float _vRotSpeed;
     [SerializeField] private float _hRotSpeed;
-    [SerializeField] private float _moveSpeed;
     [SerializeField] private float _currentSpeed;
     private float _vertical;
     private float _horizontal;
-    private float _acceleratingRate; 
-    [SerializeField] private float _maxRotate;
-    [SerializeField] private GameObject _shipModel;
-
+    private float _acceleratingRate;
+    private float _maxSpeed = 10f;
+    private float _minSpeed = 0f;
     [SerializeField] private GameObject[] _engines;
-    
+    [SerializeField] private Image _speedBar;
+    [SerializeField] private ParticleSystem _spaceDust;
+    [SerializeField] private GameObject _playerUIContainer;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +28,7 @@ public class ShipControls : MonoBehaviour
     void Update()
     {
         ShipMovement();
+        UpdateSpeedBar(_currentSpeed);
     }
 
     private void ShipMovement()
@@ -39,18 +40,20 @@ public class ShipControls : MonoBehaviour
         {
             _currentSpeed += _acceleratingRate * Time.deltaTime;
             ControlEngineFlames(_currentSpeed);
-            if (_currentSpeed > 10)
+            ControlSpaceDust(_currentSpeed);
+            if (_currentSpeed > _maxSpeed)
             {
-                _currentSpeed = 10;
+                _currentSpeed = _maxSpeed;
             }
         }
         if (Input.GetKey(KeyCode.Space))
         {
             _currentSpeed -= _acceleratingRate * Time.deltaTime;
             ControlEngineFlames(_currentSpeed);
-            if (_currentSpeed < 0)
+            ControlSpaceDust(_currentSpeed);
+            if (_currentSpeed < _minSpeed)
             {
-                _currentSpeed = 0;
+                _currentSpeed = _minSpeed;
             } 
         }
         
@@ -80,6 +83,12 @@ public class ShipControls : MonoBehaviour
         }
     }
 
+    void ControlSpaceDust(float speed)
+    {
+        ParticleSystem.MainModule ps = _spaceDust.main;
+        ps.startSpeed = new ParticleSystem.MinMaxCurve(speed * 5f);
+    }
+
     public void StopShip()
     {
         _currentSpeed = 0;
@@ -90,5 +99,20 @@ public class ShipControls : MonoBehaviour
     {
         _currentSpeed = speed;
         ControlEngineFlames(speed);
+    }
+
+    void UpdateSpeedBar(float speed)
+    {
+        _speedBar.fillAmount = speed/_maxSpeed;
+    }
+
+    public void ShowPlayerUI()
+    {
+        _playerUIContainer.SetActive(true);
+    }
+    
+    public void HidePlayerUI()
+    {
+        _playerUIContainer.SetActive(false);
     }
 }

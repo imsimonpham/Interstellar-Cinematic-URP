@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3589580437927088129}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3.036}
+  m_LocalPosition: {x: 0, y: 0, z: 3.016}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,8 +44,8 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.9960785, g: 0.95294124, b: 0.68235296, a: 1}
-  m_Intensity: 2
+  m_Color: {r: 0.8490566, g: 0.17221431, b: 0.7390698, a: 1}
+  m_Intensity: 10
   m_Range: 0.38
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -179,7 +179,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9386cb2a537fa0146af5b4828f5fb6d5, type: 2}
+  - {fileID: 2100000, guid: dbec808559d2bc842ab6b84bfe39af15, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 7635283038698600428}
   - component: {fileID: 562858868898708646}
   - component: {fileID: 3847058998747447146}
-  - component: {fileID: 73474485697320781}
+  - component: {fileID: -3078114367655597212}
   m_Layer: 0
   m_Name: EnemyBullet
   m_TagString: Untagged
@@ -236,7 +236,7 @@ Transform:
   - {fileID: 5001455795658089696}
   - {fileID: 2172707312366514885}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &7635283038698600428
 Rigidbody:
@@ -309,7 +309,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: dbec808559d2bc842ab6b84bfe39af15, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -352,8 +352,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.9960785, g: 0.95294124, b: 0.08627451, a: 1}
-      key1: {r: 0.5882353, g: 0.3647059, b: 0.050980397, a: 1}
+      key0: {r: 0.7506179, g: 0.49167854, b: 0.8207547, a: 1}
+      key1: {r: 0.5882353, g: 0.05098038, b: 0.2618114, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -392,7 +392,7 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &73474485697320781
+--- !u!114 &-3078114367655597212
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -401,9 +401,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7394815771141174397}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26773df3854b2014f88ed2ed87fef183, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cbba474feef06a4c936c32c74bf67ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _launchForce: 10000
-  _dmg: 100
+  _dmg: 0
   _bulletSpeed: 500
+  _bulletImpactEffect: {fileID: 100000, guid: 13266a9cf8da28e41bfa61b378dfabc5, type: 3}
